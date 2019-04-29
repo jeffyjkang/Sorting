@@ -6,33 +6,30 @@ animal = ['Duck', 'Jackal', 'Hippo', 'Aardvark', 'Cat',
 
 
 def selection_sort(arr):
-    # for each element in the array ...
-    # loop through n-1 elements
-    for i in range(0, len(arr) - 1):
-        # print(f'LOOP {i}')
-        # print(f'arr')
+    # loop through each index in the arr, stop at length of array, non-inclusive
+    for i in range(len(arr)):
+        # initialize the current index we are working on with the i-th index, starts at 0
         cur_index = i
+        # initialize the smallest index to the current index to compare
         smallest_index = cur_index
         # TO-DO: find next smallest element
-        # find next smalles element after that element
+        # (hint, can do in 3 loc)
+        # another loop, start at current index, end at last index in array
         for j in range(cur_index, len(arr)):
+            # if condition, value at array at index j is smaller than value of current smallest index
             if arr[j] < arr[smallest_index]:
+                # reassign the smallest index to index j
                 smallest_index = j
-        # print(f"SMALLEST ELEMENT: {arr[smallest_index]}")
+        # TO-DO: swap
         # swap that with the current element
         arr[i], arr[smallest_index] = arr[smallest_index], arr[i]
-        # temp = arr[i]
-        # arr[i] = arr[smallest_index]
-        # arr[smallest_index] = swap
-        # (hint, can do in 3 loc)
-        # TO-DO: swap
-    # for each element in the array, find the next smallest element after i and swap it
+    # return sorted array
     return arr
 
 
 # print(animal)
-# selection_sort(animal)
-# print(animal)
+selection_sort(animal)
+print(animal)
 
 # TO-DO: implement the Insertion Sort function below
 
@@ -68,38 +65,6 @@ def insertion_sort(arr):
     return arr
 
 
-# def insertion_sort(arr):
-#     #
-#     # for index in range(1,10), start of for loop
-#     for i in range(1, len(arr)):
-#         #arr = d, j, h, a, c, f , i, g, e, b
-#         # d,j,h,a,c,f,i,g,e,b
-#         print(f"i is {i}")
-#         temp = arr[i]
-#         # temp = 1jackal
-#         # temp = 2hippo
-#         print(f"temp is {temp}")
-#         j = i-1
-#         #j = 0
-#         #j = 1
-#         print(f"j is {j}")
-#         while j >= 0 and temp < arr[j]:
-#             # while 0 >=0 and jackal < duck, false
-#             # while 1 >=0 and hippo < jackal, true /while 0>=0 and hippo < duck, false
-#             arr[j+1] = arr[j]
-#             print(f"inside while loop: {arr[j+1]}")
-#             # false
-#             # 2 = jackal, false
-#             j -= 1
-#             print(f"inside while loop j: {j}")
-#             # false
-#             #j =0, false
-#         arr[j+1] = temp
-#         # arr[1] = jackal
-
-#     return arr
-
-
 insertion_sort(animal)
 print(animal)
 
@@ -111,21 +76,57 @@ print(animal)
 def bubble_sort(arr):
     # walk through the array, comparing each element to its right neightbor
     # repeat this until you make it through an entire pass without any swaps
+    # initialize is_sorted variable(bool) to false,
     is_sorted = False
+    # loop through until while condition is_sorted is true
     while not is_sorted:
+        # check that exits loop if next loop if condition is not met
         is_sorted = True
-        # walk through the array
+        # walk through the array, until index of last index -1, this is needed because
+        # we are comparing the current index with the next index
         for i in range(len(arr) - 1):
             # comparing each element to its right neighbor
             # if it's smaller than the neighbor,
             if arr[i] > arr[i + 1]:
                 # swap the elements
                 arr[i], arr[i+1] = arr[i+1], arr[i]
+                # if condition is met, reassign the is_sorted to false
                 is_sorted = False
+    # return array
     return arr
 
 
 # STRETCH: implement the Count Sort function below
-def count_sort(arr, maximum=-1):
 
+numbers = [1, 4, 9, 2, 1, 5, 9, 3, 5, 7, 1, 6, 8, 8, 3, 3, 2]
+
+
+def count_sort(arr, maximum=-1):
+    # create a count list of zeros, of length maximum + 1, this will count for,
+    # all available options including zero
+    # reassign maximum to the max value of all elements in list
+    maximum = max(arr)
+    # assign count list to a list of zeros with length maximum +1
+    count_list = [0]*(maximum+1)
+    # for each element in the arr
+    for a in arr:
+        # increment the count_list value at specified index by 1
+        count_list[a] += 1
+    # to keep track of sorted array index, initialize i to 0
+    i = 0
+    # loop through the count_list, starting from 0th index
+    for c in range(len(count_list)):
+        # while loop, value of count_list at index c
+        while count_list[c] > 0:
+            # reassign value of arr at index i to index c
+            arr[i] = c
+            # increment i by 1
+            i += 1
+            # decrement the value of count_list at index c by 1
+            count_list[c] -= 1
+    # return sorted arr
     return arr
+
+
+count_sort(numbers)
+print(numbers)
